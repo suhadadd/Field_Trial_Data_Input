@@ -1,0 +1,9 @@
+{
+  "name": "PADI FIELD TRIAL",
+  "short_name": "PADI Trial",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f4f7f3",
+  "theme_color": "#176b3a",
+  "icons": []
+}

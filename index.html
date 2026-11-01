@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#176b3a">
+  <title>PADI FIELD TRIAL</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand-mark">🌾</div>
+  <div><h1>PADI FIELD TRIAL</h1><p>Field observation & research log</p></div>
+  <span class="offline" id="netStatus">Memeriksa...</span>
+</header>
+<main>
+  <section class="stats">
+    <div class="stat"><b id="pendingCount">0</b><span>Belum tersinkron</span></div>
+    <div class="stat"><b id="savedCount">0</b><span>Data tersimpan di HP</span></div>
+  </section>
+
+  <nav class="tabs">
+    <button class="tab active" data-tab="observe">Pengamatan</button>
+    <button class="tab" data-tab="records">Data lokal</button>
+    <button class="tab" data-tab="settings">Pengaturan</button>
+  </nav>
+
+  <section class="panel active" id="observe">
+    <div class="section-head"><div><h2>Input pengamatan</h2><p>Isi satu parameter untuk satu plot.</p></div></div>
+    <form id="observationForm">
+      <label>Nama proyek / kode proyek
+        <input id="projectCode" placeholder="Contoh: PADI001" required>
+      </label>
+      <label>Nama proyek
+        <input id="projectName" placeholder="Contoh: Uji pemupukan padi">
+      </label>
+      <div class="two">
+        <label>Kode plot<input id="plotCode" placeholder="Contoh: P1-U1" required></label>
+        <label>Perlakuan<input id="treatment" placeholder="Contoh: P1"></label>
+      </div>
+      <div class="two">
+        <label>Tanggal pengamatan<input id="obsDate" type="date" required></label>
+        <label>Umur tanaman (HST)<input id="hst" type="number" min="0" step="1" placeholder="21"></label>
+      </div>
+      <label>Parameter
+        <select id="parameter" required>
+          <option value="">Pilih parameter</option>
+          <option>Tinggi tanaman</option><option>Jumlah anakan</option>
+          <option>Jumlah daun</option><option>Diameter batang</option>
+          <option>Skor warna daun</option><option>Persentase serangan hama</option>
+          <option>Persentase serangan penyakit</option><option>Umur berbunga</option>
+          <option>Jumlah malai</option><option>Panjang malai</option>
+          <option>Gabah isi</option><option>Gabah hampa</option>
+          <option>Bobot 1000 butir</option><option>Bobot hasil plot</option>
+          <option>Parameter lain</option>
+        </select>
+      </label>
+      <div class="two">
+        <label>Nilai pengamatan<input id="value" type="number" step="any" required placeholder="42"></label>
+        <label>Satuan<input id="unit" placeholder="cm, helai, %, g"></label>
+      </div>
+      <label>Nama pengamat<input id="observer" placeholder="Nama petugas"></label>
+      <label>Catatan<textarea id="notes" rows="2" placeholder="Kondisi tanaman, cuaca, kejadian khusus..."></textarea></label>
+      <button class="primary" type="submit">Simpan pengamatan di HP</button>
+      <p class="hint">Data disimpan di perangkat terlebih dahulu. Sinkronkan ke Google Sheets saat sudah terhubung.</p>
+    </form>
+  </section>
+
+  <section class="panel" id="records">
+    <div class="section-head"><div><h2>Data lokal</h2><p>Catatan yang tersimpan pada perangkat ini.</p></div><button id="refreshBtn" class="secondary">Muat ulang</button></div>
+    <div id="recordList" class="record-list"><p class="muted">Belum ada data.</p></div>
+    <button id="syncBtn" class="primary">Sinkronkan ke Google Sheets</button>
+    <p id="syncMessage" class="hint" aria-live="polite"></p>
+  </section>
+
+  <section class="panel" id="settings">
+    <h2>Pengaturan sinkronisasi</h2>
+    <p class="muted">Tempel URL Web App dari Google Apps Script setelah backend dipasang.</p>
+    <label>Apps Script Web App URL
+      <input id="endpoint" type="url" placeholder="https://script.google.com/macros/s/.../exec">
+    </label>
+    <button id="saveSettings" class="primary">Simpan URL</button>
+    <div class="callout"><b>Catatan keamanan</b><p>Gunakan spreadsheet khusus penelitian. Jangan menaruh password atau kredensial rahasia di aplikasi. Batasi akses spreadsheet kepada petugas yang berwenang.</p></div>
+    <h3>Alur pemasangan</h3>
+    <ol>
+      <li>Buat Google Spreadsheet kosong.</li>
+      <li>Buka Ekstensi → Apps Script.</li>
+      <li>Salin isi file <code>apps_script.gs</code> dari paket ini.</li>
+      <li>Jalankan fungsi <code>setupDatabase</code> satu kali dan berikan izin.</li>
+      <li>Deploy sebagai Web App, lalu salin URL /exec ke sini.</li>
+      <li>Host folder PWA melalui HTTPS (misalnya GitHub Pages).</li>
+    </ol>
+  </section>
+</main>
+<footer>Versi prototipe 0.1 · Simpan data, lalu sinkronkan</footer>
+<script src="app.js"></script>
+</body>
+</html>
